@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ControllerExceptionHendler{
+public class ControllerExceptionHendler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StandardError> objectNotFoundException(ObjectNotFoundException ex,
-                                                                 HttpServletRequest request){
+                                                                 HttpServletRequest request) {
 
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(),
                 "Objeto não encontrado", ex.getMessage(), request.getRequestURI());
@@ -26,7 +26,7 @@ public class ControllerExceptionHendler{
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException ex,
-                                                                         HttpServletRequest request){
+                                                                         HttpServletRequest request) {
 
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
                 "Violação de Dados", ex.getMessage(), request.getRequestURI());
@@ -37,13 +37,13 @@ public class ControllerExceptionHendler{
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StandardError> dataIntegrityViolationException(MethodArgumentNotValidException ex,
-                                                                         HttpServletRequest request){
+                                                                         HttpServletRequest request) {
 
         ValidationError errors = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
-                "Validation Error", "Erro na Validação dos Campos" , request.getRequestURI());
+                "Validation Error", "Erro na Validação dos Campos", request.getRequestURI());
 
         for (FieldError x : ex.getBindingResult().getFieldErrors()) {
-            errors.addError(x.getField(),x.getDefaultMessage());
+            errors.addError(x.getField(), x.getDefaultMessage());
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
@@ -51,20 +51,26 @@ public class ControllerExceptionHendler{
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<StandardError> constraintViolationException(ConstraintViolationException ex,
-                                                                      HttpServletRequest request){
+                                                                      HttpServletRequest request) {
 
         ValidationError errors = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
-                "Validation Error","Erro na Validação dos Campos" , request.getRequestURI());
+                "Validation Error", "Erro na Validação dos Campos", request.getRequestURI());
 
-        if(ex.getMessage().contains("CPF")) {
-            errors.addError("CPF Invalido","O CPF consta como incorreto" );
+        if (ex.getMessage().contains("CPF")) {
+            errors.addError("CPF Invalido", "O CPF consta como incorreto");
         }
-        if(ex.getMessage().contains("email")) {
-            errors.addError("EMAIL Invalido","O EMAIL consta como incorreto" );
+        if (ex.getMessage().contains("email")) {
+            errors.addError("EMAIL Invalido", "O EMAIL consta como incorreto");
         }
 
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
 }
 
