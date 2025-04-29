@@ -5,6 +5,7 @@ import com.biojj.app.domain.enums.Profile;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serial;
 import java.util.stream.Collectors;
@@ -14,12 +15,19 @@ import java.util.stream.Collectors;
 @Setter
 public class Collaborator extends User {
 
+    @CPF
+    private String cpf;
+
+    private String birthDate;
+
     @Serial
     private static final long serialVersionUID = 1L;
 
 
-    public Collaborator(Integer id, String name, String email, String password, Boolean status) {
+    public Collaborator(Integer id, String name, String email, String password, Boolean status, String cpf, String birthDate) {
         super(id, name, email, password, status);
+        this.cpf = cpf;
+        this.birthDate = birthDate;
 
         addProfiles(Profile.USER);
     }
@@ -35,6 +43,8 @@ public class Collaborator extends User {
         this.name = objDTO.getName();
         this.email = objDTO.getEmail();
         this.password = objDTO.getPassword();
+        this.birthDate = objDTO.getBirthDate();
+        this.cpf = objDTO.getCpf();
         this.profiles = objDTO.getPerfis().stream().map(Profile::getCode).collect(Collectors.toSet());
     }
 }

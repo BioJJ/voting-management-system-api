@@ -23,7 +23,8 @@ public class DBService {
 
     public void InstanciaDB() {
 
-        Collaborator tec1 = new Collaborator(null, "adm", "adm@gmail.com", encoder.encode("adm123"), true);
+        Collaborator tec1 = new Collaborator(null, "adm", "adm@gmail.com", encoder.encode("adm123"), true, "12026636206",
+                "08/05/1996");
         tec1.addProfiles(Profile.ADMIN);
 
         Collaborator cli1 = new Collaborator(
@@ -31,29 +32,19 @@ public class DBService {
                 "Jefferson Coelho",
                 "bio.jeffcoelho@gmail.com",
                 encoder.encode("pandora"),
-                true);
+                true,
+                "02026636206",
+                "08/05/1996");
 
         Collaborator cli2 = new Collaborator(
                 null,
                 "Snow Coelho",
                 "snow@gmail.com",
                 encoder.encode("snow123"),
-                true);
+                true,
+                "02026636201",
+                "08/02/1996");
 
-        Collaborator cli3 = new Collaborator(
-                null,
-                "Brutus Coelho",
-                "brutus@gmail.com",
-                encoder.encode("brutus123"),
-                true);
-
-        Collaborator cli4 = new Collaborator(
-                null,
-                "Pandora Coelho",
-                "pandora@gmail.com",
-                encoder.encode("pandora123"),
-                true);
-
-        collaboratorRepository.saveAll(List.of(cli1, tec1, cli2, cli3, cli4));
+        collaboratorRepository.saveAll(List.of(cli1, tec1, cli2));
     }
 }

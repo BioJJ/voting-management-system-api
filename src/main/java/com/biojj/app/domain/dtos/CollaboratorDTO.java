@@ -26,6 +26,8 @@ public class CollaboratorDTO implements Serializable {
     protected String email;
     protected String password;
     protected Boolean status;
+    protected String cpf;
+    protected String birthDate;
 
 
     protected Set<Integer> profile = new HashSet<>();
@@ -50,6 +52,8 @@ public class CollaboratorDTO implements Serializable {
         this.name = obj.getName();
         this.email = obj.getEmail();
         this.password = obj.getPassword();
+        this.cpf = obj.getCpf();
+        this.birthDate = obj.getBirthDate();
         this.status = obj.getStatus();
         this.profile = obj.getProfiles().stream().map(Profile::getCode).collect(Collectors.toSet());
         addPerfil(Profile.USER);
