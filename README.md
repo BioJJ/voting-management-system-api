@@ -47,7 +47,7 @@ Este projeto é uma aplicação web para gerenciar a sessão de votação dentro
 - Integracao com sistemas externos (opcional para tarefas bônus)
 - JWT para autenticação (opcional)
 
-## Execução do Projeto
+## Execução do Projeto local
 
 Para executar o projeto, você precisará ter o Java 17 e o Maven instalados. Siga os passos abaixo:
 
@@ -68,6 +68,26 @@ $ docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=senha_docker -e MYSQL
 ```shell
 mvn spring-boot:run
 ```
+
+## Execução do Projeto com Docker
+
+```bash
+# development
+$ docker-compose up -d
+
+```
+
+## Verifique se as 2 imagens subiram:
+```bash
+# voting-management-system-api
+# voting-management-system-api-db-1
+$ docker ps
+
+```
+### OBS: caso as 2 não apareçam, repita o comando 'docker-compose up -d'
+
+
+## Acesse a aplicação pelo browser: http://localhost:8080/swagger-ui/index.html#/
 
 ## Estrutura do Projeto
 
@@ -116,6 +136,7 @@ O projeto segue o padrão de estrutura do Maven. Abaixo, um resumo do arquivo `p
         </project>
 
 ```
+
 
 ## Rotas da Aplicação
 
